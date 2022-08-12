@@ -1,0 +1,17 @@
+{
+  "name": "taxibox-review-notifier",
+  "version": "1.0.0",
+  "description": "this project sends reviews summary notification via email",
+  "main": "index.js",
+  "scripts": {
+    "start": "node runner.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Adrian Angkajaya",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.1193.0",
+    "dotenv": "^16.0.1",
+    "node-fetch": "^2.2.3"
+  }
+}
