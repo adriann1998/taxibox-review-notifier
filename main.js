@@ -17,7 +17,7 @@ const main = () => {
     };
     documentClient.scan(params, async (err, data) => {
       if (err) {
-        reject(JSON.stringify(err, null, 2));
+        resolve(JSON.stringify(err, null, 2));
       } else {
         const today = new Date();
         const lastMonth = new Date().setMonth(today.getMonth() - 1);
@@ -60,6 +60,7 @@ const main = () => {
          `;
         const emailData = {
           to: process.env.TARGET_EMAIL,
+          cc: ['adrian@taxibox.com.au'],
           subject: `Montly Review Report - [${month}]`,
           emailName: "monthly-review-report",
           content: htmlContent,

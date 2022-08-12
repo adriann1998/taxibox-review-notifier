@@ -1,2 +1,6 @@
 const { main } = require("./main");
-main();
+const start = async () => {
+  const result = await main();
+};
+
+start();
