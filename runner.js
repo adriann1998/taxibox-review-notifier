@@ -1,2 +1,2 @@
-const { main } = require('./index');
+const { main } = require("./main");
 main();
