@@ -60,7 +60,7 @@ const main = () => {
          `;
         const emailData = {
           to: process.env.TARGET_EMAIL,
-          cc: ['adrian@taxibox.com.au'],
+          cc: ['adrian@taxibox.com.au', 'leighr@taxibox.com.au'],
           subject: `Montly Review Report - [${month}]`,
           emailName: "monthly-review-report",
           content: htmlContent,
