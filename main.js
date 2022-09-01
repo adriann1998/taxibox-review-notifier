@@ -20,9 +20,9 @@ const main = () => {
         resolve(JSON.stringify(err, null, 2));
       } else {
         const today = new Date();
-        const lastMonth = new Date().setMonth(today.getMonth() - 1);
-        const monthBefore = new Date().getMonth(); // change this to "new Date().getMonth() - 1" once DynamoDB is populating more than 10 days worth of data
-        const lastMonthReviews = data.Items.filter(review => new Date(review.addedOn).getMonth() === monthBefore);
+        const lastMonthTimeStamp = new Date().setMonth(today.getMonth() - 1);
+        const lastMonthInt = new Date().getMonth() - 1; // change this to "new Date().getMonth() - 1" once DynamoDB is populating more than 10 days worth of data
+        const lastMonthReviews = data.Items.filter(review => new Date(review.addedOn).getMonth() === lastMonthInt);
         const reviews = lastMonthReviews
           .flatMap(r => r.data)
           .map(r => ({
@@ -42,7 +42,7 @@ const main = () => {
           const rating = r.rating;
           reviewCounts[rating]++;
         });
-        const month = new Date(lastMonth).toLocaleString('default', { month: 'long' })
+        const month = new Date(lastMonthTimeStamp).toLocaleString('default', { month: 'long' })
         const htmlContent = `
            <html>
            <body>
