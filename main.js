@@ -25,6 +25,7 @@ const main = () => {
         const lastMonthReviews = data.Items.filter(review => new Date(review.addedOn).getMonth() === lastMonthInt);
         const reviews = lastMonthReviews
           .flatMap(r => r.data)
+          .filter(r => new Date(r.createdAt) >= lastMonthTimeStamp)
           .map(r => ({
             ...r,
             uniqueIdentifier: `${r.source}-${r.id}`
