@@ -12,18 +12,28 @@ const documentClient = new AWS.DynamoDB.DocumentClient({
 
 const main = () => {
   return new Promise((resolve, reject) => {
+    const today = new Date();
+    const lastMonthTimeStamp = new Date().setMonth(today.getMonth() - 1);
     const params = {
       TableName: "TAXIBOX-V2-Review-Details-Data",
+      ExpressionAttributeNames: {
+        "#addedOn": "addedOn",
+      },
+      ExpressionAttributeValues: {
+        ":lastMonthTimeStamp": lastMonthTimeStamp,
+      },
+      FilterExpression: `
+        #addedOn >= :lastMonthTimeStamp
+      `,
     };
     documentClient.scan(params, async (err, data) => {
       if (err) {
+        console.log(err);
         resolve(JSON.stringify(err, null, 2));
       } else {
         const today = new Date();
         const lastMonthTimeStamp = new Date().setMonth(today.getMonth() - 1);
-        const lastMonthInt = new Date().getMonth() - 1; // change this to "new Date().getMonth() - 1" once DynamoDB is populating more than 10 days worth of data
-        const lastMonthReviews = data.Items.filter(review => new Date(review.addedOn).getMonth() === lastMonthInt);
-        const reviews = lastMonthReviews
+        const reviews = data.Items
           .flatMap(r => r.data)
           .filter(r => new Date(r.createdAt) >= lastMonthTimeStamp)
           .map(r => ({
